@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
@@ -84,25 +85,32 @@ fun BaseScreen(
 fun BaseCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.large,
-    containerColor: Color = BaseTheme.colors.cardBack,
+    containerColor: Color = BaseTheme.colors.card,
     elevation: Dp = 5.dp,
     shadowColor: Color = BaseTheme.colors.text,
     border: BorderStroke? = null,
+    backGrad: Brush? = null,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Card(
-        modifier = modifier.then(
-            if (elevation > 0.dp && shadowColor != transparent) {
-                Modifier.shadow(
-                    elevation = elevation,
-                    shape = shape,
-                    ambientColor = shadowColor,
-                    spotColor = shadowColor
-                )
-            } else Modifier
-        ),
+        modifier = modifier
+            .then(
+                if (elevation > 0.dp && shadowColor != transparent) {
+                    Modifier.shadow(
+                        elevation = elevation,
+                        shape = shape,
+                        ambientColor = shadowColor,
+                        spotColor = shadowColor
+                    )
+                } else Modifier
+            )
+            .then(
+                if (backGrad != null) {
+                    Modifier.background(brush = backGrad, shape = shape)
+                } else Modifier
+            ),
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = containerColor),
+        colors = CardDefaults.cardColors(containerColor = if (backGrad != null) transparent else containerColor),
         border = border,
         content = content
     )
@@ -114,9 +122,9 @@ fun AdaptiveFilmListDetailPane(
     onNavigateToRootDetails: (Int) -> Unit,
     listPaneContent: @Composable (onFilmClick: (Int) -> Unit) -> Unit
 ) {
-
     var selectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
     var lastSelectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(selectedFilmId) {
         if (selectedFilmId != null) {
@@ -124,12 +132,8 @@ fun AdaptiveFilmListDetailPane(
         }
     }
 
-    val scope = rememberCoroutineScope()
-
-    val adaptiveInfo = currentWindowAdaptiveInfo()
-    val defaultDirective = calculatePaneScaffoldDirective(adaptiveInfo)
+    val defaultDirective = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo())
     val isCompactScreen = defaultDirective.maxHorizontalPartitions == 1
-
     val navigator = rememberListDetailPaneScaffoldNavigator<Int>(
         scaffoldDirective = defaultDirective
     )
@@ -176,8 +180,8 @@ fun AdaptiveFilmListDetailPane(
         },
         detailPane = {
             AnimatedPane(
-                enterTransition = slideInHorizontally() { it } + fadeIn(),
-                exitTransition = slideOutHorizontally() { it } + fadeOut()
+                enterTransition = slideInHorizontally { it } + fadeIn(),
+                exitTransition = slideOutHorizontally { it } + fadeOut()
             ) {
                 val filmId = selectedFilmId ?: lastSelectedFilmId
                 if (filmId != null) {

@@ -36,6 +36,7 @@ import com.films.components.TabButton
 import com.films.components.getIconRes
 import com.films.components.getMessageRes
 import com.films.components.toLocalizedGenresString
+import com.films.components.topBarPartialBorder
 import com.films.theme.BaseTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -107,7 +108,12 @@ fun HomeScreen(
                         bottomEnd = 14.dp
                     )
                 )
-                .background(BaseTheme.colors.bottomBar)
+                .background(BaseTheme.colors.topBarPanel)
+                .topBarPartialBorder(
+                    strokeWidth = 1.5.dp,
+                    color = BaseTheme.colors.borderPanel,
+                    cornerRadius = 14.dp
+                )
                 .padding(top = paddingValues.calculateTopPadding())
                 .fillMaxWidth()
                 .padding(6.dp)
@@ -122,7 +128,7 @@ fun HomeScreen(
                         2.dp,
                         BaseTheme.colors.border
                     ) else null,
-                    modifier = Modifier.padding(horizontal = 2.dp),
+                    modifier = Modifier.padding(horizontal = 4.dp),
                     onClick = {
                         viewModel.changeCategory(category)
                     }

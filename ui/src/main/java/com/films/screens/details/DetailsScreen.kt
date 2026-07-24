@@ -64,8 +64,8 @@ import com.films.components.toLocalizedGenresString
 import com.films.theme.BaseTheme
 import com.films.theme.LocalSetLanguage
 import com.films.theme.black
+import com.films.theme.deepPink
 import com.films.theme.green
-import com.films.theme.lightPink
 import com.films.theme.red
 import com.films.theme.royalBlue
 import com.films.theme.transparent
@@ -177,7 +177,7 @@ fun DetailsScreen(
         ) {
             ActionIconButton(
                 iconId = if (state.isFavorite) R.drawable.favorite_fill else R.drawable.favorite,
-                iconTint = lightPink,
+                iconTint = deepPink,
                 onClick = { viewModel.addToFavorite(!state.isFavorite) }
             )
             ActionIconButton(

@@ -10,6 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
@@ -18,9 +19,8 @@ import com.films.AppTheme
 @Immutable
 data class BaseColors(
     val screenBack: Color,
-    val bottomBar: Color,
-    val cardBack: Color,
-    val cardBackSecondary: Color,
+    val card: Color,
+    val cardSecondary: Color,
     val buttPrimary: Color,
     val buttSecondary: Color,
     val buttTertiary: Color,
@@ -28,33 +28,52 @@ data class BaseColors(
     val iconBackSecondary: Color,
     val iconBackTertiary: Color,
     val iconTint: Color,
-    val iconTintSecondary: Color,
     val text: Color,
-    val border: Color
-)
+    val border: Color,
+    val borderPanel: Color,
+    val panelGradientStart: Color,
+    val panelGradientEnd: Color,
+    val cardGradStart: Color,
+    val cardGradEnd: Color,
+) {
+    val topBarPanel: Brush
+        get() = Brush.verticalGradient(
+            listOf(panelGradientStart, panelGradientEnd)
+        )
+    val bottBarPanel: Brush
+        get() = Brush.verticalGradient(
+            listOf(panelGradientEnd, panelGradientStart)
+        )
+    val cardGrad: Brush
+        get() = Brush.horizontalGradient(
+            listOf(cardGradStart, cardGradEnd)
+        )
+}
 
 val lightColors = BaseColors(
     screenBack = mintCream,
-    bottomBar = skyBlue.copy(alpha = 0.85f),
-    cardBack = azure,
-    cardBackSecondary = azure,
+    card = azure,
+    cardSecondary = azure,
     buttPrimary = lightBlue,
     buttSecondary = archer,
     buttTertiary = white,
     iconBack = white,
     iconBackSecondary = white,
     iconBackTertiary = azure,
-    iconTint = royalBlue,
-    iconTintSecondary = royalBlue,
+    iconTint = cornflowerBlue,
     text = black,
-    border = lightSalmon
+    border = lightSalmon,
+    borderPanel = cornflowerBlue.copy(alpha = 0.3f),
+    panelGradientStart = lightGray.copy(alpha = 0.8f),
+    panelGradientEnd = skyBlue.copy(alpha = 0.8f),
+    cardGradStart = azure,
+    cardGradEnd = lightGray
 )
 
 val darkColors = BaseColors(
     screenBack = twilight,
-    bottomBar = darkGray.copy(alpha = 0.85f),
-    cardBack = teal,
-    cardBackSecondary = darkStateBlue.copy(alpha = 0.9f),
+    card = teal,
+    cardSecondary = darkStateBlue.copy(alpha = 0.9f),
     buttPrimary = darkOliveGreen.copy(alpha = 0.9f),
     buttSecondary = teal.copy(alpha = 0.9f),
     buttTertiary = gray,
@@ -62,14 +81,14 @@ val darkColors = BaseColors(
     iconBackSecondary = indigo.copy(alpha = 0.8f),
     iconBackTertiary = white,
     iconTint = white,
-    iconTintSecondary = lightBlue,
     text = white,
-    border = yellow
+    border = yellow,
+    borderPanel = white.copy(alpha = 0.3f),
+    panelGradientStart = darkStateBlue.copy(alpha = 0.8f),
+    panelGradientEnd = gray.copy(alpha = 0.8f),
+    cardGradStart = darkGray,
+    cardGradEnd = teal
 )
-
-val LocalBaseColors = staticCompositionLocalOf<BaseColors> {
-    error("No AppColors provided")
-}
 
 object BaseTheme {
     val colors: BaseColors
@@ -77,13 +96,9 @@ object BaseTheme {
         get() = LocalBaseColors.current
 }
 
-val LocalSetTheme = staticCompositionLocalOf {
-    AppTheme.SYSTEM
-}
-
-val LocalThemeChangeHandler = staticCompositionLocalOf<(AppTheme) -> Unit> {
-    {}
-}
+val LocalBaseColors = staticCompositionLocalOf<BaseColors> { error("No AppColors provided") }
+val LocalSetTheme = staticCompositionLocalOf { AppTheme.SYSTEM }
+val LocalThemeChangeHandler = staticCompositionLocalOf<(AppTheme) -> Unit> { {} }
 
 @Composable
 fun FilmsTheme(
@@ -121,17 +136,15 @@ fun FilmsTheme(
             content = content
         )
     }
-
 }
 
 @Composable
 private fun animateColorSchemeAsState(targetColor: BaseColors): BaseColors {
-    val animationSpec = tween<Color>(durationMillis = 350)
+    val animationSpec = tween<Color>(durationMillis = 400)
     return BaseColors(
         screenBack = animateColorAsState(targetColor.screenBack, animationSpec).value,
-        bottomBar = animateColorAsState(targetColor.bottomBar, animationSpec).value,
-        cardBack = animateColorAsState(targetColor.cardBack, animationSpec).value,
-        cardBackSecondary = animateColorAsState(targetColor.cardBackSecondary, animationSpec).value,
+        card = animateColorAsState(targetColor.card, animationSpec).value,
+        cardSecondary = animateColorAsState(targetColor.cardSecondary, animationSpec).value,
         buttPrimary = animateColorAsState(targetColor.buttPrimary, animationSpec).value,
         buttSecondary = animateColorAsState(targetColor.buttSecondary, animationSpec).value,
         buttTertiary = animateColorAsState(targetColor.buttTertiary, animationSpec).value,
@@ -139,8 +152,15 @@ private fun animateColorSchemeAsState(targetColor: BaseColors): BaseColors {
         iconBackSecondary = animateColorAsState(targetColor.iconBackSecondary, animationSpec).value,
         iconBackTertiary = animateColorAsState(targetColor.iconBackTertiary, animationSpec).value,
         iconTint = animateColorAsState(targetColor.iconTint, animationSpec).value,
-        iconTintSecondary = animateColorAsState(targetColor.iconTintSecondary, animationSpec).value,
         text = animateColorAsState(targetColor.text, animationSpec).value,
-        border = animateColorAsState(targetColor.border, animationSpec).value
+        border = animateColorAsState(targetColor.border, animationSpec).value,
+        borderPanel = animateColorAsState(targetColor.borderPanel, animationSpec).value,
+        panelGradientStart = animateColorAsState(
+            targetColor.panelGradientStart,
+            animationSpec
+        ).value,
+        panelGradientEnd = animateColorAsState(targetColor.panelGradientEnd, animationSpec).value,
+        cardGradStart = animateColorAsState(targetColor.cardGradStart, animationSpec).value,
+        cardGradEnd = animateColorAsState(targetColor.cardGradEnd, animationSpec).value
     )
 }

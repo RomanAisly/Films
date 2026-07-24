@@ -30,7 +30,7 @@ fun FilmsItem(
     BaseCard(
         modifier = modifier.clickable { onFilmClick() },
         shape = MaterialTheme.shapes.large,
-        containerColor = BaseTheme.colors.cardBackSecondary
+        containerColor = BaseTheme.colors.cardSecondary
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

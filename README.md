@@ -17,16 +17,17 @@ approach.
 ## 📱 Screenshots
 
 <div align="center">
-   <img src="screenshots/home_screen.png" alt="Home Screen" width="19%" />
-  <img src="screenshots/detail_screen.png" alt="Details Screen" width="19%" />
-  <img src="screenshots/favorites_screen.png" alt="Favorites Screen" width="19%" />
-  <img src="screenshots/watch_later_screen.png" alt="Watch Later Screen" width="19%" />
-  <img src="screenshots/settings_screen.png" alt="Settings Screen" width="19%" />
+   <img src="app/docs/screenshots/home_screen.png" alt="Home Screen" width="19%" />
+  <img src="app/docs/screenshots/details_screen.png" alt="Details Screen" width="19%" />
+  <img src="app/docs/screenshots/favorites_screen.png" alt="Favorites Screen" width="19%" />
+  <img src="app/docs/screenshots/watch_later_screen.png" alt="Watch Later Screen" width="19%" />
+  <img src="app/docs/screenshots/settings_screen.png" alt="Settings Screen" width="19%" />
 
-<br><br>
+<br>
 
-  <img src="screenshots/adaptive_home.png" alt="Adaptive Home Screen" width="49%" />
-  <img src="screenshots/adaptive_details.png" alt="Adaptive Details Screen" width="49%" />
+  <img src="app/docs/screenshots/home_screen_fold.png" alt="Adaptive Home Screen" width="32%" />
+  <img src="app/docs/screenshots/details_screen_fold.png" alt="Adaptive Details Screen" width="32%" />
+  <img src="app/docs/screenshots/settings_screen_fold.png" alt="Adaptive Details Screen" width="32%" />
 </div>
 
 ---

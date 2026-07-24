@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.films.components.BaseIcon
+import com.films.components.bottomBarPartialBorder
 import com.films.theme.BaseTheme
 import com.films.theme.lightBlue
 import com.films.theme.transparent
@@ -50,13 +51,21 @@ fun BottomNavBar(
         )
     }
     NavigationBar(
-        modifier = Modifier.clip(
-            shape = RoundedCornerShape(
-                topStart = 16.dp,
-                topEnd = 16.dp
+        modifier = Modifier
+            .clip(
+                shape = RoundedCornerShape(
+                    topStart = 14.dp,
+                    topEnd = 14.dp
+                )
             )
-        ),
-        containerColor = BaseTheme.colors.bottomBar
+            .background(BaseTheme.colors.bottBarPanel)
+            .bottomBarPartialBorder(
+                strokeWidth = 1.5.dp,
+                color = BaseTheme.colors.borderPanel,
+                cornerRadius = 14.dp
+            ),
+        containerColor = transparent,
+        tonalElevation = 0.dp,
     ) {
         bottomScreens.forEach { item ->
             val isSelected = currentTab::class == item.route::class
