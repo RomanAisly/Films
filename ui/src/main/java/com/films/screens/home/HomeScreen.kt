@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,11 +25,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.components.FilmCategory
 import com.films.components.FilmsItem
+import com.films.components.LayoutMode
 import com.films.components.LoadingScreen
 import com.films.components.RefreshIndicator
 import com.films.components.SnackBarFlow
@@ -43,6 +46,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
+    layoutMode: LayoutMode,
     viewModel: HomeViewModel = koinViewModel(),
     paddingValues: PaddingValues,
     onFilmClick: (id: Int) -> Unit
@@ -51,6 +55,13 @@ fun HomeScreen(
     val refreshState = rememberPullToRefreshState()
     val gridState = rememberLazyGridState()
     val isScrollInProgress = gridState.isScrollInProgress
+    val layoutDirection = LocalLayoutDirection.current
+
+    val columnsCount = when (layoutMode) {
+        LayoutMode.PORTRAIT -> 2
+        LayoutMode.LANDSCAPE_PHONE -> 4
+        LayoutMode.FOLD_TABLET -> 5
+    }
 
     Box(
         modifier = Modifier
@@ -68,12 +79,12 @@ fun HomeScreen(
             } else {
                 LazyVerticalGrid(
                     state = gridState,
-                    columns = GridCells.Adaptive(minSize = 160.dp),
+                    columns = GridCells.Fixed(columnsCount),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(
                         start = 8.dp,
-                        end = 8.dp,
+                        end = 8.dp + paddingValues.calculateEndPadding(layoutDirection),
                         top = paddingValues.calculateTopPadding() + 72.dp,
                         bottom = 8.dp + paddingValues.calculateBottomPadding()
                     )

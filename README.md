@@ -17,17 +17,19 @@ approach.
 ## 📱 Screenshots
 
 <div align="center">
-   <img src="app/docs/screenshots/home_screen.png" alt="Home Screen" width="19%" />
-  <img src="app/docs/screenshots/details_screen.png" alt="Details Screen" width="19%" />
-  <img src="app/docs/screenshots/favorites_screen.png" alt="Favorites Screen" width="19%" />
-  <img src="app/docs/screenshots/watch_later_screen.png" alt="Watch Later Screen" width="19%" />
-  <img src="app/docs/screenshots/settings_screen.png" alt="Settings Screen" width="19%" />
+  <img src="app/docs/screenshots/home_screen.png" alt="Home Screen" width="18%" />&nbsp;
+  <img src="app/docs/screenshots/details_screen.png" alt="Details Screen" width="18%" />&nbsp;
+  <img src="app/docs/screenshots/favorites_screen.png" alt="Favorites Screen" width="18%" />&nbsp;
+  <img src="app/docs/screenshots/watch_later_screen.png" alt="Watch Later Screen" width="18%" />&nbsp;
+  <img src="app/docs/screenshots/settings_screen.png" alt="Settings Screen" width="18%" />
 
-<br>
+<br><br>
 
-  <img src="app/docs/screenshots/home_screen_fold.png" alt="Adaptive Home Screen" width="32%" />
-  <img src="app/docs/screenshots/details_screen_fold.png" alt="Adaptive Details Screen" width="32%" />
-  <img src="app/docs/screenshots/settings_screen_fold.png" alt="Adaptive Details Screen" width="32%" />
+<img src="app/docs/screenshots/home_screen_fold.png" alt="Adaptive Home Screen" width="30%" />
+&nbsp;&nbsp;&nbsp;
+<img src="app/docs/screenshots/details_screen_fold.png" alt="Adaptive Details Screen" width="30%" />
+&nbsp;&nbsp;&nbsp;
+<img src="app/docs/screenshots/settings_screen_fold.png" alt="Adaptive Settings Screen" width="30%" />
 </div>
 
 ---
@@ -99,5 +101,5 @@ own [TMDB API Key](https://developer.themoviedb.org/docs/getting-started).
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YourUsername/Films.git
+   git clone https://github.com/RomanAisly/Films
    ```

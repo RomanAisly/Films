@@ -1,6 +1,8 @@
 package com.films.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -32,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -50,6 +53,7 @@ import com.films.theme.transparent
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun BaseScreen(
@@ -119,6 +123,9 @@ fun BaseCard(
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun AdaptiveFilmListDetailPane(
+    layoutMode: LayoutMode,
+    restoredFilmId: Int?,
+    onRestored: () -> Unit,
     onNavigateToRootDetails: (Int) -> Unit,
     listPaneContent: @Composable (onFilmClick: (Int) -> Unit) -> Unit
 ) {
@@ -126,17 +133,47 @@ fun AdaptiveFilmListDetailPane(
     var lastSelectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(selectedFilmId) {
-        if (selectedFilmId != null) {
-            lastSelectedFilmId = selectedFilmId
-        }
-    }
-
     val defaultDirective = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo())
-    val isCompactScreen = defaultDirective.maxHorizontalPartitions == 1
     val navigator = rememberListDetailPaneScaffoldNavigator<Int>(
         scaffoldDirective = defaultDirective
     )
+    val isCompactScreen = layoutMode == LayoutMode.PORTRAIT
+
+    var previousMode by rememberSaveable { mutableStateOf(layoutMode) }
+    var isRotating by remember { mutableStateOf(false) }
+
+    if (previousMode != layoutMode) {
+        isRotating = true
+        previousMode = layoutMode
+    }
+
+    LaunchedEffect(isRotating) {
+        if (isRotating) {
+            kotlinx.coroutines.delay(300.milliseconds)
+            isRotating = false
+        }
+    }
+
+    LaunchedEffect(restoredFilmId, isCompactScreen) {
+        if (restoredFilmId != null && !isCompactScreen) {
+            selectedFilmId = restoredFilmId
+            scope.launch {
+                navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, restoredFilmId)
+            }
+            onRestored()
+        }
+    }
+
+    LaunchedEffect(isCompactScreen, selectedFilmId) {
+        if (selectedFilmId != null) {
+            lastSelectedFilmId = selectedFilmId
+        }
+        if (isCompactScreen && selectedFilmId != null) {
+            val filmIdToTransfer = selectedFilmId!!
+            selectedFilmId = null
+            onNavigateToRootDetails(filmIdToTransfer)
+        }
+    }
 
     BackHandler(enabled = selectedFilmId != null) {
         scope.launch {
@@ -163,8 +200,14 @@ fun AdaptiveFilmListDetailPane(
         value = customScaffoldValue,
         listPane = {
             AnimatedPane(
-                enterTransition = slideInHorizontally(tween(500)) { -it } + fadeIn(tween(500)),
-                exitTransition = slideOutHorizontally(tween(500)) { -it } + fadeOut(tween(500))
+                enterTransition = if (isRotating) EnterTransition.None else slideInHorizontally(
+                    tween(500)
+                ) { -it } + fadeIn(tween(500)),
+                exitTransition = if (isRotating) ExitTransition.None else slideOutHorizontally(
+                    tween(
+                        500
+                    )
+                ) { -it } + fadeOut(tween(500))
             ) {
                 listPaneContent { filmId ->
                     if (isCompactScreen) {
@@ -180,8 +223,14 @@ fun AdaptiveFilmListDetailPane(
         },
         detailPane = {
             AnimatedPane(
-                enterTransition = slideInHorizontally { it } + fadeIn(),
-                exitTransition = slideOutHorizontally { it } + fadeOut()
+                enterTransition = if (isRotating) EnterTransition.None else slideInHorizontally(
+                    tween(500)
+                ) { it } + fadeIn(tween(500)),
+                exitTransition = if (isRotating) ExitTransition.None else slideOutHorizontally(
+                    tween(
+                        500
+                    )
+                ) { it } + fadeOut(tween(500))
             ) {
                 val filmId = selectedFilmId ?: lastSelectedFilmId
                 if (filmId != null) {
@@ -205,4 +254,3 @@ fun AdaptiveFilmListDetailPane(
         }
     )
 }
-

@@ -24,6 +24,12 @@ import com.films.ui.R
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
 
+enum class LayoutMode {
+    PORTRAIT,
+    LANDSCAPE_PHONE,
+    FOLD_TABLET
+}
+
 enum class FilmCategory(
     val nameRes: Int,
     val category: String

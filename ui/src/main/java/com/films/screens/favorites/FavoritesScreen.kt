@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.components.BaseText
 import com.films.components.FilmsItem
+import com.films.components.LayoutMode
 import com.films.components.toLocalizedGenresString
 import com.films.components.topBarPartialBorder
 import com.films.theme.BaseTheme
@@ -34,6 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FavoritesScreen(
+    layoutMode: LayoutMode,
     viewModel: FavoritesViewModel = koinViewModel(),
     paddingValues: PaddingValues,
     onFilmClick: (id: Int) -> Unit
