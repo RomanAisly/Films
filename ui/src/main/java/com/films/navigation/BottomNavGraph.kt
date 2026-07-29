@@ -124,9 +124,10 @@ fun BottomNavGraph(
                             layoutMode = layoutMode,
                             restoredFilmId = restoredFilmId,
                             onRestored = onRestored, onNavigateToRootDetails = onNavigateToDetails
-                        ) { onFilmClick ->
+                        ) { isDetailOpen, onFilmClick ->
                             HomeScreen(
                                 layoutMode = layoutMode,
+                                isDetailOpen = isDetailOpen,
                                 paddingValues = paddingValues,
                                 onFilmClick = onFilmClick
                             )
@@ -138,9 +139,10 @@ fun BottomNavGraph(
                             layoutMode = layoutMode,
                             restoredFilmId = restoredFilmId,
                             onRestored = onRestored, onNavigateToRootDetails = onNavigateToDetails
-                        ) { onFilmClick ->
+                        ) { isDetailOpen, onFilmClick ->
                             FavoritesScreen(
                                 layoutMode = layoutMode,
+                                isDetailOpen = isDetailOpen,
                                 paddingValues = paddingValues,
                                 onFilmClick = onFilmClick
                             )
@@ -152,9 +154,10 @@ fun BottomNavGraph(
                             layoutMode = layoutMode,
                             restoredFilmId = restoredFilmId,
                             onRestored = onRestored, onNavigateToRootDetails = onNavigateToDetails
-                        ) { onFilmClick ->
+                        ) { isDetailOpen, onFilmClick ->
                             WatchLaterScreen(
                                 layoutMode = layoutMode,
+                                isDetailOpen = isDetailOpen,
                                 paddingValues = paddingValues,
                                 onFilmClick = onFilmClick
                             )

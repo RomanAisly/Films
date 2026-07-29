@@ -1,8 +1,7 @@
 package com.films.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -56,7 +55,7 @@ fun RootNavGraph() {
 
     var restoredFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
 
-    val fadeDuration = 900
+    val animDuration = 750
 
     LaunchedEffect(isLandscapeLayout) {
         if (isLandscapeLayout) {
@@ -71,17 +70,21 @@ fun RootNavGraph() {
         backStack = rootBackStack,
         modifier = Modifier.fillMaxSize(),
         transitionSpec = {
-            fadeIn(animationSpec = tween(fadeDuration)) togetherWith fadeOut(
-                animationSpec = tween(
-                    fadeDuration
-                )
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(animDuration)
+            ) togetherWith slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(animDuration)
             )
         },
         popTransitionSpec = {
-            fadeIn(animationSpec = tween(fadeDuration)) togetherWith fadeOut(
-                animationSpec = tween(
-                    fadeDuration
-                )
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(animDuration)
+            ) togetherWith slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(animDuration)
             )
         },
         entryProvider = entryProvider {

@@ -17,11 +17,10 @@ approach.
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="app/docs/screenshots/home_screen.png" alt="Home Screen" width="18%" />&nbsp;
-  <img src="app/docs/screenshots/details_screen.png" alt="Details Screen" width="18%" />&nbsp;
-  <img src="app/docs/screenshots/favorites_screen.png" alt="Favorites Screen" width="18%" />&nbsp;
-  <img src="app/docs/screenshots/watch_later_screen.png" alt="Watch Later Screen" width="18%" />&nbsp;
-  <img src="app/docs/screenshots/settings_screen.png" alt="Settings Screen" width="18%" />
+  <img src="app/docs/screenshots/home_screen.png" alt="Home Screen" width="22%" />&nbsp;&nbsp;
+  <img src="app/docs/screenshots/favorites_screen.png" alt="Favorites Screen" width="22%" />&nbsp;&nbsp;
+  <img src="app/docs/screenshots/watch_later_screen.png" alt="Watch Later Screen" width="22%" />&nbsp;&nbsp;
+  <img src="app/docs/screenshots/settings_screen.png" alt="Settings Screen" width="22%" />
 
 <br><br>
 

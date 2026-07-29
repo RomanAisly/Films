@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,6 +38,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun FavoritesScreen(
     layoutMode: LayoutMode,
+    isDetailOpen: Boolean,
     viewModel: FavoritesViewModel = koinViewModel(),
     paddingValues: PaddingValues,
     onFilmClick: (id: Int) -> Unit
@@ -43,6 +46,15 @@ fun FavoritesScreen(
     val favoriteFilms by viewModel.favoriteFilms.collectAsStateWithLifecycle()
     val gridState = rememberLazyGridState()
     val isScrollInProgress = gridState.isScrollInProgress
+    val layoutDirection = LocalLayoutDirection.current
+
+    val columnsCount = when {
+        layoutMode == LayoutMode.PORTRAIT -> 2
+        isDetailOpen -> 2
+        layoutMode == LayoutMode.LANDSCAPE_PHONE -> 4
+        layoutMode == LayoutMode.FOLD_TABLET -> 4
+        else -> 2
+    }
 
     Box(
         modifier = Modifier
@@ -51,14 +63,14 @@ fun FavoritesScreen(
     ) {
         LazyVerticalGrid(
             state = gridState,
-            columns = GridCells.Adaptive(minSize = 160.dp),
+            columns = GridCells.Fixed(columnsCount),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(
                 start = 8.dp,
-                end = 8.dp,
+                end = 8.dp + paddingValues.calculateEndPadding(layoutDirection),
                 top = paddingValues.calculateTopPadding() + 58.dp,
-                bottom = 8.dp + paddingValues.calculateBottomPadding() + 8.dp
+                bottom = 8.dp + paddingValues.calculateBottomPadding()
             )
         ) {
             items(favoriteFilms, key = { it.id }) { films ->

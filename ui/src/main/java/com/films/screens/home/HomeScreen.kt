@@ -47,6 +47,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     layoutMode: LayoutMode,
+    isDetailOpen: Boolean,
     viewModel: HomeViewModel = koinViewModel(),
     paddingValues: PaddingValues,
     onFilmClick: (id: Int) -> Unit
@@ -57,10 +58,12 @@ fun HomeScreen(
     val isScrollInProgress = gridState.isScrollInProgress
     val layoutDirection = LocalLayoutDirection.current
 
-    val columnsCount = when (layoutMode) {
-        LayoutMode.PORTRAIT -> 2
-        LayoutMode.LANDSCAPE_PHONE -> 4
-        LayoutMode.FOLD_TABLET -> 5
+    val columnsCount = when {
+        layoutMode == LayoutMode.PORTRAIT -> 2
+        isDetailOpen -> 2
+        layoutMode == LayoutMode.LANDSCAPE_PHONE -> 4
+        layoutMode == LayoutMode.FOLD_TABLET -> 4
+        else -> 2
     }
 
     Box(

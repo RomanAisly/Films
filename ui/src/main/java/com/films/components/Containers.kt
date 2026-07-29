@@ -127,7 +127,7 @@ fun AdaptiveFilmListDetailPane(
     restoredFilmId: Int?,
     onRestored: () -> Unit,
     onNavigateToRootDetails: (Int) -> Unit,
-    listPaneContent: @Composable (onFilmClick: (Int) -> Unit) -> Unit
+    listPaneContent: @Composable (isDetailOpen: Boolean, onFilmClick: (Int) -> Unit) -> Unit
 ) {
     var selectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
     var lastSelectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -209,7 +209,7 @@ fun AdaptiveFilmListDetailPane(
                     )
                 ) { -it } + fadeOut(tween(500))
             ) {
-                listPaneContent { filmId ->
+                listPaneContent(selectedFilmId != null) { filmId ->
                     if (isCompactScreen) {
                         onNavigateToRootDetails(filmId)
                     } else {

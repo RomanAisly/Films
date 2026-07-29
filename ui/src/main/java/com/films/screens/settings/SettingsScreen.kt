@@ -1,6 +1,5 @@
 package com.films.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.films.AppLanguage
 import com.films.AppTheme
@@ -36,17 +33,13 @@ import com.films.components.BaseIcon
 import com.films.components.BaseText
 import com.films.components.getIconRes
 import com.films.components.getTitleRes
-import com.films.components.previewModule
 import com.films.components.topBarPartialBorder
 import com.films.theme.BaseTheme
-import com.films.theme.FilmsTheme
 import com.films.theme.LocalLanguageChangeHandler
 import com.films.theme.LocalSetLanguage
 import com.films.theme.LocalSetTheme
 import com.films.theme.LocalThemeChangeHandler
 import com.films.ui.R
-import org.koin.compose.KoinContext
-import org.koin.dsl.koinApplication
 
 @Composable
 fun SettingsScreen(paddingValues: PaddingValues) {
@@ -212,30 +205,5 @@ private fun LanguageItem(
                 unselectedColor = BaseTheme.colors.iconTint
             )
         )
-    }
-}
-
-@Composable
-@Preview(
-    name = "Light Mode",
-    showBackground = true,
-    showSystemUi = true
-)
-@Preview(
-    name = "Dark Mode",
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-private fun Preview() {
-    val koin = remember {
-        koinApplication {
-            modules(previewModule)
-        }.koin
-    }
-    KoinContext(context = koin) {
-        FilmsTheme(onThemeChange = {}) {
-            SettingsScreen(paddingValues = PaddingValues())
-        }
     }
 }
