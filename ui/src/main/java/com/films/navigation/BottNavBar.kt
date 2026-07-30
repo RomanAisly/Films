@@ -68,7 +68,7 @@ fun BottomNavBar(
             modifier = Modifier
                 .fillMaxHeight()
                 .clip(RoundedCornerShape(topEnd = 14.dp, bottomEnd = 14.dp))
-                .background(BaseTheme.colors.bottBarPanel),
+                .background(BaseTheme.colors.navBarLand),
             containerColor = transparent,
         ) {
             Spacer(modifier = Modifier.weight(1f))
@@ -95,7 +95,7 @@ fun BottomNavBar(
                         topEnd = 14.dp
                     )
                 )
-                .background(BaseTheme.colors.bottBarPanel)
+                .background(BaseTheme.colors.navBarPort)
                 .bottomBarPartialBorder(
                     strokeWidth = 1.5.dp,
                     color = BaseTheme.colors.borderPanel,

@@ -8,7 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -36,18 +37,18 @@ data class BaseColors(
     val cardGradStart: Color,
     val cardGradEnd: Color,
 ) {
-    val topBarPanel: Brush
-        get() = Brush.verticalGradient(
-            listOf(panelGradientStart, panelGradientEnd)
-        )
-    val bottBarPanel: Brush
-        get() = Brush.verticalGradient(
-            listOf(panelGradientEnd, panelGradientStart)
-        )
-    val cardGrad: Brush
-        get() = Brush.horizontalGradient(
-            listOf(cardGradStart, cardGradEnd)
-        )
+    val topBarPanel = Brush.verticalGradient(
+        listOf(panelGradientStart, panelGradientEnd)
+    )
+    val navBarPort = Brush.verticalGradient(
+        listOf(panelGradientEnd, panelGradientStart)
+    )
+    val navBarLand = Brush.horizontalGradient(
+        listOf(panelGradientStart, panelGradientEnd)
+    )
+    val cardGrad = Brush.horizontalGradient(
+        listOf(cardGradStart, cardGradEnd)
+    )
 }
 
 val lightColors = BaseColors(
@@ -96,7 +97,7 @@ object BaseTheme {
         get() = LocalBaseColors.current
 }
 
-val LocalBaseColors = staticCompositionLocalOf<BaseColors> { error("No AppColors provided") }
+val LocalBaseColors = compositionLocalOf<BaseColors> { error("No AppColors provided") }
 val LocalSetTheme = staticCompositionLocalOf { AppTheme.SYSTEM }
 val LocalThemeChangeHandler = staticCompositionLocalOf<(AppTheme) -> Unit> { {} }
 
@@ -117,7 +118,7 @@ fun FilmsTheme(
 
     val view = LocalView.current
     if (!view.isInEditMode) {
-        SideEffect {
+        LaunchedEffect(isDark) {
             val window = (view.context as Activity).window
             val insetsController = WindowCompat.getInsetsController(window, view)
             insetsController.isAppearanceLightStatusBars = !isDark
