@@ -12,16 +12,16 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val settingsRepository: SettingsRepository) : ViewModel() {
 
-    val themeState: StateFlow<AppTheme> = settingsRepository.themeFlow.stateIn(
+    val themeState: StateFlow<AppTheme?> = settingsRepository.themeFlow.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = AppTheme.SYSTEM
+        started = SharingStarted.Eagerly,
+        initialValue = null
     )
 
-    val languageState: StateFlow<AppLanguage> = settingsRepository.languageFlow.stateIn(
+    val languageState: StateFlow<AppLanguage?> = settingsRepository.languageFlow.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = AppLanguage.ENGLISH
+        started = SharingStarted.Eagerly,
+        initialValue = null
     )
 
 
