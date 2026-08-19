@@ -17,18 +17,18 @@ approach.
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="app/docs/screenshots/home_screen.png" alt="Home Screen" width="22%" />&nbsp;&nbsp;
-  <img src="app/docs/screenshots/favorites_screen.png" alt="Favorites Screen" width="22%" />&nbsp;&nbsp;
-  <img src="app/docs/screenshots/watch_later_screen.png" alt="Watch Later Screen" width="22%" />&nbsp;&nbsp;
-  <img src="app/docs/screenshots/settings_screen.png" alt="Settings Screen" width="22%" />
+  <img src="https://github.com/user-attachments/assets/3935ff74-62ae-410a-b908-fb1a1b822555" alt="Home Screen" width="22%" />&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/b865082f-7faf-41b7-8a44-7e7a98a64107" alt="Favorites Screen" width="22%" />&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/693997dd-6ac3-4655-87d2-5db9ee7629c0" alt="Watch Later Screen" width="22%" />&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/63b4386b-aaca-4f29-9e98-9dd2e2256762" alt="Settings Screen" width="22%" />
 
 <br><br>
 
-<img src="app/docs/screenshots/home_screen_fold.png" alt="Adaptive Home Screen" width="30%" />
+<img src="https://github.com/user-attachments/assets/6e2de1e7-03b9-41d4-9bc9-710b943f9936" alt="Adaptive Home Screen" width="30%" />
 &nbsp;&nbsp;&nbsp;
-<img src="app/docs/screenshots/details_screen_fold.png" alt="Adaptive Details Screen" width="30%" />
+<img src="https://github.com/user-attachments/assets/a6f0280b-82a0-4b59-9903-06333fbc5049" alt="Adaptive Details Screen" width="30%" />
 &nbsp;&nbsp;&nbsp;
-<img src="app/docs/screenshots/settings_screen_fold.png" alt="Adaptive Settings Screen" width="30%" />
+<img src="https://github.com/user-attachments/assets/895ebfeb-b8e8-45cd-bc7b-e337dc7e2c39" alt="Adaptive Settings Screen" width="30%" />
 </div>
 
 ---

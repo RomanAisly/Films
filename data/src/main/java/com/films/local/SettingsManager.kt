@@ -1,6 +1,7 @@
 package com.films.local
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
@@ -36,7 +37,8 @@ class SettingsManager(private val dataStore: DataStore<Preferences>) : SettingsR
         }
 
     override val themeFlow: Flow<AppTheme> = getEnumFlow(THEME_KEY, AppTheme.SYSTEM)
-    override val languageFlow: Flow<AppLanguage> = getEnumFlow(LANGUAGE_KEY, AppLanguage.ENGLISH)
+    override val languageFlow: Flow<AppLanguage> =
+        getEnumFlow(LANGUAGE_KEY, getDefaultSystemLanguage())
 
     override suspend fun saveTheme(theme: AppTheme) {
         dataStore.edit { it[THEME_KEY] = theme.name }
@@ -49,5 +51,13 @@ class SettingsManager(private val dataStore: DataStore<Preferences>) : SettingsR
     companion object {
         private val THEME_KEY = stringPreferencesKey("theme")
         private val LANGUAGE_KEY = stringPreferencesKey("language")
+    }
+
+    private fun getDefaultSystemLanguage(): AppLanguage {
+        val systemLocale = Resources.getSystem().configuration.locales[0]
+        val systemLangCode = systemLocale.language
+
+        return AppLanguage.entries.find { it.localeCode == systemLangCode }
+            ?: AppLanguage.ENGLISH
     }
 }
